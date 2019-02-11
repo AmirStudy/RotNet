@@ -10,6 +10,8 @@ from keras.models import Model
 from keras.layers import Dense, Flatten
 from keras.optimizers import SGD
 
+import onnxmltools
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils import angle_error, RotNetDataGenerator
 from data.street_view import get_filenames as get_street_view_filenames
@@ -39,6 +41,8 @@ final_output = Dense(nb_classes, activation='softmax', name='fc360')(x)
 
 # create the new model
 model = Model(inputs=base_model.input, outputs=final_output)
+
+model.load_weights('rotnet_street_view_resnet50_weights.hdf5')
 
 model.summary()
 
@@ -91,3 +95,6 @@ model.fit_generator(
     callbacks=[checkpointer, reduce_lr, early_stopping, tensorboard],
     workers=10
 )
+
+onnx_model = onnxmltools.convert_keras(model)
+onnxmltools.utils.save_model(onnx_model, 'rotnet_street_view_resnet50.onnx')
