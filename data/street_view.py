@@ -6,9 +6,9 @@ import zipfile
 
 
 def download(output_dir):
-    for i in range(10):
+    for i in range(5):
         filename = 'part{}.zip'.format(i + 1)
-        url = r'http://www.cs.ucf.edu/~aroshan/index_files/Dataset_PitOrlManh/zipped%20images/' + filename
+        url = r'http://www.cs.ucf.edu/~aroshan/index_files/Dataset_PitOrlManh/zipped images/' + filename
         print('Downloading', url)
         filepath = wget.download(url, out=os.path.join(output_dir))
 
