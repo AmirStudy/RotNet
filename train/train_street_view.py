@@ -42,8 +42,6 @@ final_output = Dense(nb_classes, activation='softmax', name='fc360')(x)
 # create the new model
 model = Model(inputs=base_model.input, outputs=final_output)
 
-model.load_weights('./models/rotnet_street_view_resnet50.hdf5')
-
 model.summary()
 
 # model compilation
@@ -53,7 +51,7 @@ model.compile(loss='categorical_crossentropy',
 
 # training parameters
 batch_size = 64
-nb_epoch = 4
+nb_epoch = 50
 
 output_folder = 'models'
 if not os.path.exists(output_folder):
